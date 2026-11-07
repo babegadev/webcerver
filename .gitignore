@@ -1,2 +1,21 @@
+# Compiled binaries have no extension (e.g. `string` from string.c),
+# so ignore every file, then un-ignore folders and files that have an extension.
+*
+!*/
+!*.*
+!Makefile
+!.gitignore
+
+# C build artifacts
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.out
+*.exe
+*.dSYM/
+
+# Other
 c-webserver-guidebook.pdf
 .DS_Store
