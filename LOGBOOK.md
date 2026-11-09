@@ -14,3 +14,10 @@ Okay this one's pretty tough. I'm currently able to get the file size using fsee
 
 ### 1.4: Dynamic array of items that doubles capacity when full
 This one I think I have done before in my learn-c, where I created an IntVec, I think the key is to track len and cap. Completed the function(s) from the given function headers. Added checks to prevent size from overflowing by comparing to MAX_SIZE. Split the grow function into its own static helper.
+
+## Part 2 - Tooling: compiler, debugger, sanitizers, make
+
+### 2.1: Catching erros with tools:
+- Off by one: ASan caught this. Running the compiled binary with -Wall and -Wextra does not give the warning and it fails silently.
+- Use after free: ASan caught this one, but compiling with no flag and running the binary still flags an error.
+- Read uninitialized: this one got caught by the -Wall flag.
