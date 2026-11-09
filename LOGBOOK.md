@@ -25,6 +25,49 @@ This one I think I have done before in my learn-c, where I created an IntVec, I 
 Further exploration:
 - Turns out `gdb` is not recommended for use on mac due to Apple's security models. So we can use `lldb` instead or setup a linux dev env (which I'm guessing is why part 3 exist). 
 
+ASan deep dive:
+- used by adding `-fsanitize=address` when compiling / linking
+- can be used to detect:
+    - out of bounds to heap, stack, and globals
+    - use after free
+    - double-free, invalid free
+    - use after return (with extra flags)
+- ASan introduces a ~2x slowdown
+- ASan exits on the first detected error, because a memory error causes an unstable program state, which makes the rest of the program inconsistent. This also speeds up compilation.
+
+UndefinedBehaviorSanitizer (UBSan)
+- used by adding `-fsanitize=undefined`
+- can be used to detect
+    - array subscript out of bounds (when it can be determined statically)
+    - bitwise shifts out of bounds for the data type
+    - dereferencing null/misalligned pointers
+    - signed integer overflow
+    - floating point conversions that would cause an overflow
+- UBSan have a small runtime cost and no impact on address space layout
+
+Valgrind
+- debugging tool similar to ASan
+- runs on compiled binary (unlike ASan where you have to recompile with a specific flag)
+- works by emulating the cpu (whereas ASan manipulates the memory)
+- significant slowdown (20-50x)
+- run with `valgrind --leak-check=yes ./myprog arg1 arg2`
+
+Summary of which tools to use:
+| Error type        | ASan  | UBSan | Valgrind |
+| ----------        | ----  | ----- | -------- |
+| off-by-one        | X     |       | X        |
+| use-after-free    | X     |       |          |
+| uninitialized     |       |       | X        |
+
+GDB
+- just a debugger
+- run with `gdb ./prog -tui` for gui
+- commands `file, run, b (break), quit, file, next, step, bt`
+- pair with ASan to catch bugs. compile with ASan then `ASAN_OPTIONS=abort_on_error=1 gdb ./prog -tui`
+    - `(gdb) run`
+    - `(gdb) bt`
+    - `(gdb) frame #n`
+    - `(gdb) info locals`
 
 ### 2.2: Makefile
 I guess this is like a config file similar to a Dockerfile where you set the commands to run on build. Will be going through the https://makefiletutorial.com/ site.
