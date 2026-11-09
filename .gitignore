@@ -5,6 +5,7 @@
 !*.*
 !Makefile
 !.gitignore
+.vscode
 
 # C build artifacts
 *.o

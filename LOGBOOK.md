@@ -21,3 +21,27 @@ This one I think I have done before in my learn-c, where I created an IntVec, I 
 - Off by one: ASan caught this. Running the compiled binary with -Wall and -Wextra does not give the warning and it fails silently.
 - Use after free: ASan caught this one, but compiling with no flag and running the binary still flags an error.
 - Read uninitialized: this one got caught by the -Wall flag.
+
+Further exploration:
+- Turns out `gdb` is not recommended for use on mac due to Apple's security models. So we can use `lldb` instead or setup a linux dev env (which I'm guessing is why part 3 exist). 
+
+
+### 2.2: Makefile
+I guess this is like a config file similar to a Dockerfile where you set the commands to run on build. Will be going through the https://makefiletutorial.com/ site.
+
+(For now I'm skipping this part a little since i'm more interested in the part 3)
+
+### 2.3: Setting up a linux environment
+This looks like a fun part lol, I miss homelabbing. So, after some research, I found that I can use OrbStack to create an Ubuntu VM (arm64). Since my pi that I'll use to host the final version will also be arm64, the behaviour should be the same. OrbStack also uses much less ram, so I guess it's a good choice.
+
+Orbstack & Ubuntu VM:
+- I have installed OrbStack, and created a default VM, called it (webcerver-vm)
+- Installed the required packages `buld-essentials clang gdb valgrind curl netcat-openbsd make git`
+- Figured out how to ssh, and how to use the `orb` command
+- Can access files on webcerver folder from the VM
+- Can compile files from the VM and can run `gdb` command
+
+Netcat (nc):
+- Successfully started a netcat listener in orb `nc -l 8080`
+- Connected from mac `nc webcerver-vm.orb.local 8080`
+- Could send messages between the 2 of them
