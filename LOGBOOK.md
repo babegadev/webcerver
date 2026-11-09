@@ -72,7 +72,22 @@ GDB
 ### 2.2: Makefile
 I guess this is like a config file similar to a Dockerfile where you set the commands to run on build. Will be going through the https://makefiletutorial.com/ site.
 
-(For now I'm skipping this part a little since i'm more interested in the part 3)
+Okay so i get it, kinda. Basically we can set a target (an output file). And if the output file doesn't exist yet, make will run the commands to build/compile that target file so that it exists.
+
+Usage example
+```make
+blah: blah.o
+	cc blah.o -o blah # Runs third
+
+blah.o: blah.c
+	cc -c blah.c -o blah.o # Runs second
+
+blah.c:
+	echo "int main() { return 0; }" > blah.c # Runs first
+```
+In `blah: blah.o`, `blah` is the target, `blah.o` is a requirement (dependency). So it searches first for blah.o. Since blah.o requires blah.c, it first searches for blah.c.
+
+Other notable things: make clean is used to cleanup files. It's just like any other target. There are several targets & wildcards available, but we can always refer to the docs. For now I think I'm good and can continue.
 
 ### 2.3: Setting up a linux environment
 This looks like a fun part lol, I miss homelabbing. So, after some research, I found that I can use OrbStack to create an Ubuntu VM (arm64). Since my pi that I'll use to host the final version will also be arm64, the behaviour should be the same. OrbStack also uses much less ram, so I guess it's a good choice.
