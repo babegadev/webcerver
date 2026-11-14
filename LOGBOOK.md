@@ -103,3 +103,8 @@ Netcat (nc):
 - Successfully started a netcat listener in orb `nc -l 8080`
 - Connected from mac `nc webcerver-vm.orb.local 8080`
 - Could send messages between the 2 of them
+
+## Part 3 - Files
+
+### 3.1 - Cat:
+It's been a while. I just finished 2 midterms this week, so time to get back to coding. Right so this was a fun one. I started by getting the file descriptor using the open() function and passing in the filename. Then, i tried reading the bytes and printing it through the buffer. But it had some weird issues like for example an error message printed just before the last line of my cat output. Turns out using printf caused some issues due to buffering. Instead, i was supposed to use write directly to the stdout. Then, I realized I needed to handle the ./cat command and just print back whatever comes in stdin to stdout. So, I extracted the copy from file to stdout into its own function and called it from the blank cat branch.
